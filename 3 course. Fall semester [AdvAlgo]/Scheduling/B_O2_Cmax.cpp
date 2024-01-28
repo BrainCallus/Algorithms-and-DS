@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 typedef long long LL;
@@ -74,10 +73,8 @@ void constructSchedule() {
 
     if (J.empty() || !I.empty() && aJob[x] >= bJob[y]) {
         scheduleAB = bSchedule(x, I, J, false);
-
     } else {
         scheduleAB = bSchedule(y, J, I, true);
-
     }
     cout << cMax << "\n";
 
@@ -91,7 +88,6 @@ void constructSchedule() {
 }
 
 int main() {
-
     freopen("o2cmax.in", "r", stdin);
     freopen("o2cmax.out", "w", stdout);
     cin >> n;
