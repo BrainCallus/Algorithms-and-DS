@@ -1,5 +1,4 @@
 #include <iostream>
-#include <iomanip>
 #include <complex>
 #include <cmath>
 #include <vector>
@@ -12,7 +11,7 @@ typedef long long LL;
 const int MOD = 10;
 const int POW = 1;
 
-void notRecursive_FFT(vector<CD> &num, bool inv) {
+void recursive_FFT(vector<CD> &num, bool inv) {
     if (!(num.size() - 1)) {
         return;
     }
@@ -22,8 +21,8 @@ void notRecursive_FFT(vector<CD> &num, bool inv) {
         a0[j] = num[i];
         a1[j] = num[++i];
     }
-    notRecursive_FFT(a0, inv);
-    notRecursive_FFT(a1, inv);
+    recursive_FFT(a0, inv);
+    recursive_FFT(a1, inv);
     double angle = (double) (inv ? -2.0 : 2.0) * PI / sz;
     CD w(1), wn(cos(angle), sin(angle));
     for (int i = 0; i ^ (sz / 2); i++) {
@@ -43,12 +42,12 @@ void multiply(vector<LL> &first, vector<LL> &second, vector<LL> &res) {
     sz <<= 1;
     fa.resize(sz);
     fb.resize(sz);
-    notRecursive_FFT(fa, false);
-    notRecursive_FFT(fb, false);
+    recursive_FFT(fa, false);
+    recursive_FFT(fb, false);
     for (int i = 0; i ^ sz; i++) {
         fa[i] *= fb[i];
     }
-    notRecursive_FFT(fa, true);
+    recursive_FFT(fa, true);
     res.resize(sz);
     for (int i = 0; i < sz; i++) {
         res[i] = LL(fa[i].real() + 0.5);
@@ -100,7 +99,7 @@ int main() {
     vector<LL> res;
     multiply(first, second, res);
     numericalForm(res);
-    if (!res.size()) {
+    if (res.empty()) {
         cout << 0;
         return 0;
     }
